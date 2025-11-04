@@ -22,7 +22,12 @@ st.markdown("Backtests a strategy using Supertrend on dual timeframes for Gold (
 
 # --- Sidebar ---
 st.sidebar.header("Strategy Parameters")
-ticker = st.sidebar.text_input("Ticker Symbol", value="GC=F")
+ticker = st.sidebar.text_input(
+    "Ticker Symbol", 
+    value="XAUUSD=X", 
+    help="Try XAUUSD=X for spot gold, GC=F for futures, or BTC-USD, AAPL, etc."
+)
+
 period = st.sidebar.selectbox(
     "Data Period",
     ["1d", "5d", "30d", "60d", "3mo", "6mo", "1y"],
