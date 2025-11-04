@@ -29,7 +29,7 @@ st.markdown(
 
 # --- Sidebar Configuration ---
 st.sidebar.header("Strategy Parameters")
-ticker = st.sidebar.text_input("Ticker Symbol", value=“XAUUSD=X”)
+ticker = st.sidebar.text_input("Ticker Symbol", value="XAUUSD=X")
 period = st.sidebar.selectbox(
     "Data Period", ["1d", "5d", "30d", "60d", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max"],
     index=1
