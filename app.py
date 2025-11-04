@@ -53,11 +53,22 @@ df_5m = pd.DataFrame()
 df_15m = pd.DataFrame()
 
 try:
-    # Download 5-minute data
-    df_5m = yf.download(ticker, interval="5m", period=period, auto_adjust=False)
-    if df_5m.empty:
-        st.error(f"Error: No 5-minute data downloaded for {ticker}. Please check ticker/period.")
-        st.stop()
+ df_5m = yf.download(ticker, interval="5m", period=period, auto_adjust=False)
+
+# If empty, fallback automatically to 15m
+if df_5m.empty:
+    st.warning(f"No 5-minute data found for {ticker} ({period}). Trying 15-minute interval instead...")
+    df_5m = yf.download(ticker, interval="15m", period=period, auto_adjust=False)
+
+# If still empty, fallback to 1-hour
+if df_5m.empty:
+    st.warning(f"No intraday data available for {ticker}. Using 1-hour data instead.")
+    df_5m = yf.download(ticker, interval="1h", period=period, auto_adjust=False)
+
+if df_5m.empty:
+    st.error(f"Error: No data available for {ticker}. Try a different ticker or shorter period (like '1d').")
+    st.stop()
+
 
     if isinstance(df_5m.columns, pd.MultiIndex):
         df_5m.columns = df_5m.columns.droplevel(1)
